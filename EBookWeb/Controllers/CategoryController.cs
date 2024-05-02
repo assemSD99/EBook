@@ -1,4 +1,5 @@
 ﻿using EBookWeb.Data;
+using EBookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EBookWeb.Controllers
@@ -13,8 +14,8 @@ namespace EBookWeb.Controllers
         }
         public IActionResult Index()
         {
-            var category = _context.Categories.ToList();
-            return View();
+            IEnumerable<Category> objCategoryList = _context.Categories;
+            return View(objCategoryList);
         }
     }
 }
