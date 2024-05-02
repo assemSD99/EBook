@@ -27,6 +27,10 @@ namespace EBookWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category category)
         {
+            if(category.Name == category.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name");
+            }
             if(ModelState.IsValid)
             {
                 _context.Categories.Add(category);
@@ -34,7 +38,7 @@ namespace EBookWeb.Controllers
 
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(category);
         }
 
     }
