@@ -17,5 +17,25 @@ namespace EBookWeb.Controllers
             IEnumerable<Category> objCategoryList = _context.Categories;
             return View(objCategoryList);
         }
+
+        public IActionResult Create() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category category)
+        {
+            if(ModelState.IsValid)
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
     }
 }
