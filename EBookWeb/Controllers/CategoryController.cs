@@ -75,5 +75,39 @@ namespace EBookWeb.Controllers
             return View(category);
         }
 
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var categoryFromDb = _context.Categories.Find(id);
+            //var categoryFirst = _context.Categories.FirstOrDefault(i => i.Id == id);
+            //var categorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+
+        [HttpPost,ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePOST(int? id)
+        {
+            var obj = _context.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            
+                _context.Categories.Remove(obj);
+                _context.SaveChanges();
+
+                return RedirectToAction("Index");
+           
+        }
+
     }
 }
