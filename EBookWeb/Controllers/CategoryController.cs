@@ -7,15 +7,15 @@ namespace EBook.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ICategoryRepository _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(ICategoryRepository context)
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            IEnumerable<Category> objCategoryList = _context.GetAll();
+            IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
 
@@ -34,8 +34,8 @@ namespace EBook.Controllers
             }
             if(ModelState.IsValid)
             {
-                _context.Add(category);
-                _context.Save();
+                _unitOfWork.Category.Add(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Created successfully";
 
                 return RedirectToAction("Index");
@@ -50,7 +50,7 @@ namespace EBook.Controllers
                 return NotFound();
             }
             //var categoryFromDb = _context.Categories.Find(id);
-            var categoryFirst = _context.GetFirstOrDefault(i => i.Id == id);
+            var categoryFirst = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
             //var categorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
             if(categoryFirst == null)
             {
@@ -69,8 +69,8 @@ namespace EBook.Controllers
             }
             if (ModelState.IsValid)
             {
-                _context.Update(category);
-                _context.Save();
+                _unitOfWork.Category.Update(category);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Edited successfully";
 
 
@@ -87,7 +87,7 @@ namespace EBook.Controllers
                 return NotFound();
             }
             //var categoryFromDb = _context.Categories.Find(id);
-            var categoryFirst = _context.GetFirstOrDefault(i => i.Id == id);
+            var categoryFirst = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
             //var categorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
             if (categoryFirst == null)
             {
@@ -100,14 +100,14 @@ namespace EBook.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
-            var obj = _context.GetFirstOrDefault(i => i.Id == id);
+            var obj = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            
-                _context.Remove(obj);
-                _context.Save();
+
+                _unitOfWork.Category.Remove(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Category Deleted successfully";
 
 
