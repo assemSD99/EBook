@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ebook.DataAccess.Repository
 {
-    internal class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -17,7 +17,7 @@ namespace Ebook.DataAccess.Repository
         {
             _db = db;
         }
-        public void save()
+        public void Save()
         {
             _db.SaveChanges();
         }
