@@ -3,8 +3,9 @@ using Ebook.Models;
 using EBook.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EBook.Controllers
-{
+namespace EBook.Controllers;
+[Area("Admin")]
+
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -116,4 +117,4 @@ namespace EBook.Controllers
         }
 
     }
-}
+
