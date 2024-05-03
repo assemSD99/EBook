@@ -1,8 +1,8 @@
-﻿using EBookWeb.Data;
-using EBookWeb.Models;
+﻿using Ebook.Models;
+using EBook.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EBookWeb.Controllers
+namespace EBook.Controllers
 {
     public class CategoryController : Controller
     {
