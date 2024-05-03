@@ -12,7 +12,6 @@ namespace Ebook.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [Display(Name ="Cover Type")]
         [MaxLength(50)]
         public int Name { get; set; }
     }
