@@ -27,21 +27,23 @@ namespace EBook.Controllers;
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Category category)
+        public IActionResult Create(Category Category)
         {
-            if(category.Name == category.DisplayOrder.ToString())
+
+            if (Category.Name == Category.DisplayOrder.ToString())
             {
-                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name");
+            ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name");
             }
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Add(category);
+                _unitOfWork.Category.Add(Category);
                 _unitOfWork.Save();
                 TempData["success"] = "Category Created successfully";
 
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(Category);
         }
 
         public IActionResult Edit(int? id) 
@@ -50,34 +52,35 @@ namespace EBook.Controllers;
             {
                 return NotFound();
             }
-            //var categoryFromDb = _context.Categories.Find(id);
-            var categoryFirst = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
-            //var categorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
-            if(categoryFirst == null)
+            //var CategoryFromDb = _context.Categories.Find(id);
+            var CategoryFirst = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
+            //var CategorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
+            if(CategoryFirst == null)
             {
                 return NotFound();
             }
-            return View(categoryFirst); 
+            return View(CategoryFirst); 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Category category)
+        public IActionResult Edit(Category Category)
         {
-            if (category.Name == category.DisplayOrder.ToString())
+            if (Category.Name == Category.DisplayOrder.ToString())
             {
-                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name");
+            ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name");
             }
+
             if (ModelState.IsValid)
             {
-                _unitOfWork.Category.Update(category);
+                _unitOfWork.Category.Update(Category);
                 _unitOfWork.Save();
                 TempData["success"] = "Category Edited successfully";
 
 
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View(Category);
         }
 
 
@@ -87,14 +90,14 @@ namespace EBook.Controllers;
             {
                 return NotFound();
             }
-            //var categoryFromDb = _context.Categories.Find(id);
-            var categoryFirst = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
-            //var categorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
-            if (categoryFirst == null)
+            //var CategoryFromDb = _context.Categories.Find(id);
+            var CategoryFirst = _unitOfWork.Category.GetFirstOrDefault(i => i.Id == id);
+            //var CategorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
+            if (CategoryFirst == null)
             {
                 return NotFound();
             }
-            return View(categoryFirst);
+            return View(CategoryFirst);
         }
 
         [HttpPost,ActionName("Delete")]
