@@ -48,14 +48,14 @@ namespace EBook.Controllers
             {
                 return NotFound();
             }
-            var categoryFromDb = _context.Categories.Find(id);
-            //var categoryFirst = _context.Categories.FirstOrDefault(i => i.Id == id);
+            //var categoryFromDb = _context.Categories.Find(id);
+            var categoryFirst = _context.Categories.FirstOrDefault(i => i.Name == "id");
             //var categorySingle = _context.Categories.SingleOrDefault(i => i.Id == id);
-            if(categoryFromDb == null)
+            if(categoryFirst == null)
             {
                 return NotFound();
             }
-            return View(categoryFromDb); 
+            return View(categoryFirst); 
         }
 
         [HttpPost]
