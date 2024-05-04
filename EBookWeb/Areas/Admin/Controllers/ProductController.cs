@@ -20,22 +20,22 @@ namespace EBook.Controllers;
             return View(objProductList);
         }
 
-            
+        
 
-        public IActionResult Edit(int? id) 
-        { 
-            if(id== null || id==0)
+        public IActionResult Upsert(int? id) 
+        {
+            Product product = new();
+
+            if (id== null || id==0)
             {
-                return NotFound();
-            }
-            //var ProductFromDb = _context.Categories.Find(id);
-            var ProductFirst = _unitOfWork.Product.GetFirstOrDefault(i => i.Id == id);
-            //var ProductSingle = _context.Categories.SingleOrDefault(i => i.Id == id);
-            if(ProductFirst == null)
+                //Create Product
+                return View(product);
+            }else
             {
-                return NotFound();
+                //Update Product
             }
-            return View(ProductFirst); 
+            
+            return View(product); 
         }
 
         [HttpPost]
