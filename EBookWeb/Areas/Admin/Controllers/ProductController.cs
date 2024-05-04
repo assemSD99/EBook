@@ -62,12 +62,12 @@ namespace EBook.Controllers;
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Product Product)
+        public IActionResult Edit(ProductVM Product,IFormFile file)
         {
            
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Update(Product);
+                //_unitOfWork.Product.Update(Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product Edited successfully";
 
