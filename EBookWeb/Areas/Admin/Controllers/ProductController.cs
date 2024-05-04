@@ -42,6 +42,7 @@ namespace EBook.Controllers;
 		if (id== null || id==0)
             {
                 ViewBag.CategoryList = CategoryList;
+                ViewData["CoverTypeList"] = CoverTypeList;
 				//Create Product
 				return View(product);
             }else
