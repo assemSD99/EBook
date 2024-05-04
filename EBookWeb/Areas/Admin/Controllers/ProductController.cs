@@ -41,8 +41,9 @@ namespace EBook.Controllers;
 
 		if (id== null || id==0)
             {
-                //Create Product
-                return View(product);
+                ViewBag.CategoryList = CategoryList;
+				//Create Product
+				return View(product);
             }else
             {
                 //Update Product
