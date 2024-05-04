@@ -20,26 +20,7 @@ namespace EBook.Controllers;
             return View(objProductList);
         }
 
-        public IActionResult Create() 
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Product Product)
-        {
             
-            if(ModelState.IsValid)
-            {
-                _unitOfWork.Product.Add(Product);
-                _unitOfWork.Save();
-                TempData["success"] = "Product Created successfully";
-
-                return RedirectToAction("Index");
-            }
-            return View(Product);
-        }
 
         public IActionResult Edit(int? id) 
         { 
