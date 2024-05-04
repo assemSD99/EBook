@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240504114923_AddProductToDbAndCoverType")]
-    partial class AddProductToDbAndCoverType
+    [Migration("20240504120631_AddProductToDb")]
+    partial class AddProductToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

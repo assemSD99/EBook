@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EBook.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240503221223_AddCoverTypeToDb")]
+    [Migration("20240504120316_AddCoverTypeToDb")]
     partial class AddCoverTypeToDb
     {
         /// <inheritdoc />
@@ -56,9 +56,10 @@ namespace EBook.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Name")
+                    b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
