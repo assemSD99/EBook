@@ -1,7 +1,6 @@
 using Ebook.DataAccess.Repository;
 using Ebook.DataAccess.Repository.IRepository;
 using Ebook.Models;
-using Ebook.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
