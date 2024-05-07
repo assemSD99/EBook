@@ -20,8 +20,8 @@ namespace EBook.Controllers;
 	}
         public IActionResult Index()
         {
-            IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll();
-            return View(objProductList);
+            
+            return View();
         }
 
         
@@ -129,5 +129,14 @@ namespace EBook.Controllers;
            
         }
 
+    #region API CALLS
+    [HttpGet]
+    public IActionResult Getall()
+    {
+        var productList = _unitOfWork.Product.GetAll();
+        return Json(new {data =  productList});
     }
+    #endregion
+
+}
 
