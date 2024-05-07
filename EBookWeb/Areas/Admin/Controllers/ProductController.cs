@@ -11,11 +11,13 @@ namespace EBook.Controllers;
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+	private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductController(IUnitOfWork unitOfWork)
+	public ProductController(IUnitOfWork unitOfWork,IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
-        }
+		    _webHostEnvironment = webHostEnvironment;
+	}
         public IActionResult Index()
         {
             IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll();
@@ -62,19 +64,33 @@ namespace EBook.Controllers;
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(ProductVM Product,IFormFile file)
+        public IActionResult Upsert(ProductVM obj,IFormFile? file)
         {
            
             if (ModelState.IsValid)
             {
-                //_unitOfWork.Product.Update(Product);
+                string wwwRoot = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(wwwRoot, @"images\products");
+                    var extension =Path.GetExtension(file.FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        file.CopyTo(fileStreams);
+                    }
+                obj.Product.ImageUrl = @"\images\products" + fileName + extension;
+                }
+
+                _unitOfWork.Product.Add(obj.Product);
                 _unitOfWork.Save();
-                TempData["success"] = "Product Edited successfully";
+                TempData["success"] = "Product created successfully";
 
 
                 return RedirectToAction("Index");
             }
-            return View(Product);
+            return View(obj);
         }
 
 
