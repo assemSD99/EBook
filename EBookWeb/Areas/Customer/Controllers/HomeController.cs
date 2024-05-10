@@ -1,8 +1,9 @@
-using Ebook.DataAccess.Repository;
 using Ebook.DataAccess.Repository.IRepository;
 using Ebook.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace EBook.Controllers;
 [Area("Customer")]
@@ -12,7 +13,7 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly IUnitOfWork _unitOfWork;
 
-    public HomeController(ILogger<HomeController> logger,IUnitOfWork unitOfWork)
+    public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
@@ -20,20 +21,35 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties:"Category,CoverType");
+        IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,CoverType");
         return View(productList);
     }
 
-    public IActionResult Details(int id)
+    public IActionResult Details(int productId)
     {
         ShoppingCart objCart = new()
         {
             Count = 1,
-            Product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == id, includeProperties: "Category,CoverType")
+            ProductId = productId,
+            Product = _unitOfWork.Product.GetFirstOrDefault(u => u.Id == productId, includeProperties: "Category,CoverType")
         };
-		
-		return View(objCart);
-	}
+
+        return View(objCart);
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    [Authorize]
+    public IActionResult Details(ShoppingCart shoppingCart)
+    {
+        var claimsIdentity = (ClaimsIdentity)User.Identity;
+        var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+        shoppingCart.ApplicationUserId = claim.Value;
+
+        _unitOfWork.ShoppingCart.Add(shoppingCart);
+        _unitOfWork.Save();
+
+        return RedirectToAction("Index");
+    }
 
     public IActionResult Privacy()
     {
