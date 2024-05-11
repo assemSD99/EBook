@@ -6,5 +6,6 @@ namespace Ebook.DataAccess.Repository.IRepository
     {
         void Update(OrderHeader obj);
         void UpdateStatus(int id, string orderStatus, string? paymenStatus = null);
+        void UpdateStripePaymentID(int id, string sessionId, string paymenItentId);
     }
 }
