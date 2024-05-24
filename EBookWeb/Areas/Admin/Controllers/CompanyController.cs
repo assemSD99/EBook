@@ -1,10 +1,12 @@
 ﻿using Ebook.DataAccess.Repository.IRepository;
 using Ebook.Models;
+using Ebook.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EBook.Controllers;
 [Area("Admin")]
-
+[Authorize(Roles = SD.Role_Admin)]
 public class CompanyController : Controller
 {
     private readonly IUnitOfWork _unitOfWork;
