@@ -12,7 +12,7 @@ namespace Ebook.Utility
             emailToSend.From.Add(MailboxAddress.Parse("hello@dotnetmastery.com"));
             emailToSend.To.Add(MailboxAddress.Parse(email));
             emailToSend.Subject = subject;
-            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlMessage });
+            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = htmlMessage };
 
 
             //send email
